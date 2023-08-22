@@ -20,37 +20,31 @@ if not os.path.exists(UPLOAD_PATH):
 def hello_world():
    return render_template('index.html')
 
-@app.route('/closer')
-def closer():
-   return '''
-   <h1>You are getting closer :)</h1>
-   '''
-
-@app.route('/closer/<int:userId>')
-def closer_userId(userId):
+@app.route('/simple/<int:userId>')
+def simple_userId(userId):
    return f'''
-   <h1>You are getting closer user number {userId} :)</h1>
+   <h1>A simple web page for user number {userId} :)</h1>
    '''
 
-@app.route('/closer/<string:username>')
-def closer_username(username):
+@app.route('/simple/<string:username>')
+def simple_username(username):
    return f'''
-   <h1>You are getting closer user {username} :)</h1>
+   <h1>A simple web page for user {username} :)</h1>
    '''
 
-@app.route('/close')
-def close():
+@app.route('/simple')
+def simple():
    name = request.cookies["username"]
    if name.isdigit():
-      return redirect(url_for('closer_userId', userId = name))
+      return redirect(url_for('simple_userId', userId = name))
    else:
-      return redirect(url_for('closer_username', username = name))
+      return redirect(url_for('simple_username', username = name))
    
 @app.route('/login',methods = ['POST', 'GET'])
 def login():
    if request.method == 'POST':
       user = request.form['name']
-      resp = redirect(url_for('close'))
+      resp = redirect(url_for('simple'))
       resp.set_cookie("username", user)
       return resp
    else:
@@ -64,7 +58,7 @@ def upload_file_page():
 def upload_file():
    f = request.files['file']
    f.save(f"{UPLOAD_PATH}{secure_filename(f.filename)}")
-   return 'file uploaded successfully'
+   return 'File uploaded successfully!'
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
