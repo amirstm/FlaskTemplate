@@ -1,5 +1,5 @@
 ---
-name: 02 Build with BuildKit Cache
+name: Build with BuildKit Cache
 run-name: ${{ github.actor }} is building the image and pushing it on DockerHub.
 on:
   push:
