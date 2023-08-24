@@ -4,7 +4,7 @@ import jdatetime, datetime, json
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
-from flask import Flask, redirect, url_for, request, render_template
+from flask import Flask, redirect, url_for, request, render_template, session
 from werkzeug.utils import secure_filename
 import os
 
@@ -12,6 +12,7 @@ print("Hello world!")
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = "/uploaded/"
+app.secret_key = 'any random string'
 UPLOAD_PATH = "uploaded/"
 if not os.path.exists(UPLOAD_PATH):
     os.makedirs(UPLOAD_PATH)
@@ -59,6 +60,24 @@ def upload_file():
    f = request.files['file']
    f.save(f"{UPLOAD_PATH}{secure_filename(f.filename)}")
    return 'File uploaded successfully!'
+
+@app.route("/login", methods=["POST", "GET"])
+def login():
+   if request.method == 'POST':
+      session['username'] = request.form['username']
+      return redirect(url_for('login'))
+   else:
+      if 'username' in session:
+         username = session['username']
+         return 'Logged in as ' + username + '<br>' + \
+            "<b><a href='/logout'>click here to log out</a></b>"
+      else:
+         return render_template('login.html', time_display = datetime.datetime.now())
+   
+@app.route('/logout')
+def logout():
+   del session['username']
+   return redirect(url_for('login'))
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
