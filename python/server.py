@@ -34,21 +34,21 @@ def simple_username(username):
 
 @app.route('/simple')
 def simple():
-   name = request.cookies["username"]
+   name = request.cookies["input-name"]
    if name.isdigit():
       return redirect(url_for('simple_userId', userId = name))
    else:
       return redirect(url_for('simple_username', username = name))
    
-@app.route('/login',methods = ['POST', 'GET'])
-def login():
+@app.route('/cookie',methods = ['POST', 'GET'])
+def cookie():
    if request.method == 'POST':
       user = request.form['name']
       resp = redirect(url_for('simple'))
-      resp.set_cookie("username", user)
+      resp.set_cookie("input-name", user)
       return resp
    else:
-      return render_template('login.html', time_display = datetime.datetime.now())
+      return render_template('cookie.html', time_display = datetime.datetime.now())
 
 @app.route('/upload')
 def upload_file_page():
