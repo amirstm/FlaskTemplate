@@ -6,7 +6,7 @@
 
 <body>
     <img style="height: 100px; position: absolute; right: 10px; top:10px;" src="{{ url_for('static', filename = 'img/Moby-logo.png') }}" />
-    <h1>Hey guys :)</h1>
+    <h1>Hey {{ title }} :)</h1>
     <h2>Welcome to my Flask template project.</h2>    
     <img style="height: 200px;" src="https://media.giphy.com/media/Rhf0uSWt1P2TFqVMZK/giphy.gif" />
     <br />
@@ -14,6 +14,9 @@
     <table style="margin-left: 10px; width: 100px;">
         <tr>
             <th>Pages</th>
+        </tr>
+        <tr>
+            <td><a href="login">Login</a></td>
         </tr>
         <tr>
             <td><a href="cookie">Cookie</a></td>

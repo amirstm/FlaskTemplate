@@ -18,8 +18,12 @@ if not os.path.exists(UPLOAD_PATH):
     os.makedirs(UPLOAD_PATH)
 
 @app.route('/')
-def hello_world():
-   return render_template('index.html')
+def index():
+   if 'username' in session:
+      title = session["username"]
+   else:
+      title = "guys"
+   return render_template('index.html', title = title)
 
 @app.route('/simple/<int:userId>')
 def simple_userId(userId):
@@ -69,8 +73,9 @@ def login():
    else:
       if 'username' in session:
          username = session['username']
-         return 'Logged in as ' + username + '<br>' + \
-            "<b><a href='/logout'>click here to log out</a></b>"
+         return f'Logged in as {username}' + \
+            "<br><b><a href='/'>Home</a></b>" + \
+            "<br><br><b><a href='/logout'>click here to log out</a></b>"
       else:
          return render_template('login.html', time_display = datetime.datetime.now())
    
