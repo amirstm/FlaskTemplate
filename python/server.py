@@ -1,9 +1,3 @@
-import pandas as pd
-import numpy as np
-import jdatetime, datetime, json
-import matplotlib
-import matplotlib.pyplot as plt
-from matplotlib.ticker import FuncFormatter
 from flask import Flask, redirect, url_for, request, render_template, session
 from werkzeug.utils import secure_filename
 import os
